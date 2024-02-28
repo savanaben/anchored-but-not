@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion in Toolbar</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+
+        .toolbar {
+            box-shadow: 0px 0px 0px 8px rgba(255,255,255,1);
+            border-radius: 6px;
+    width: auto;
+    background-color: #ffffff;
+    z-index: 1000;
+    padding: 12px;
+    border: 2px solid #909090;
+    position: fixed;
+    top: 0;
+    margin: 8px;
+    font-size: 24px;
+    font-family: sans-serif;
+    color: #2478CC;
+    text-align: left; /* Align text to the right */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+
+        p{
+            font-size: 24px;
+            font-family: sans-serif;
+            line-height: 1.1;
+        }
+
+        h1{
+          
+            font-family: sans-serif;
+           
+        }
+
+        button {
+            margin-right:24px;
+            font-size: 24px;
+            color: rgb(0, 78, 203);
+            padding: 8px;
+            background-color: white;
+            border-width: 2px;
+            border-radius: 6px;
+            border-style: solid;
+            border-color: rgb(167, 167, 167);
+            cursor: pointer;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 10px;
+            color: rgb(34, 34, 34);
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+
+        .page-content {
+            padding: 24px;
+            margin-top: 60px;
+        }
+
+        .page-content.expanded {
+    margin-top: 0px; /* Smaller margin-top when expanded */
+}
+
+        .accordion-expanded  {
+            position: static;
+            width: auto;
+        }
+
+        .accordion-expanded .accordion-content {
+            max-height: 200px; /* Adjust this value based on your content */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar" id="toolbar">
+        Credit Card Information
+    <div class="accordion-content">
+        <p>This is the accordion content. It can be expanded or collapsed.</p>
+        <p>More content here...</p>
+        <p>This is the main content of the page. It will be pushed down when the accordion is ex This is the main content of the page. It will be pushed down when the accordion is exp.</p>
+        <p>This is the main content of the page. It will be pushed down when the accordion is ex This is the main this is the m content of the ll be pushed down when the accordion is exp.</p>
+        <p>This is the main content of the page. It will be pushed down when the accordion is exThis is the main content of the page. It will be pushed down when the.</p>
+        <p>This is the main content of the page.</p>
+    </div>
+</div>
+
+<div class="page-content">
+    <h1>Page Content</h1>
+    <p>This is the main content of the page. It will be pushed down when the accordion is exThis is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will bwn when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.panded.</p>
+    <p>More is the main content of the page. It will be pushed down when the accordion is expanded.This is the main contmain content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.tent here...</p>
+    <p>More is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the pl be pushed down when the accordion is main content of the page. It will be pushed down when the accordion is expanded.This is the of the page. It will be pushed down when the accordion is expanded.ontent here...</p>
+    <p>More content here...</p>
+    <p>More coThis is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will be pushed down when the accord is is the main content of the page. wn when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.ntent here...</p>
+    <p>More content here...</p>
+    <p>More cThis is the main content of the page. It will be pushed down when the accordion is expanded.This is the mt of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.ontent here...</p>
+    <p>More content here...</p>
+    <p>More content here...</p>
+    <p>This is the main content of the page. It will be pushed down when the accordion is exThis is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.This is the main content of the page. It will bwn when the accordion is expanded.This is the main content of the page. It will be pushed down when the accordion is expanded.panded.</p>
+    <p>More content here...</p>
+</div>
+
+<script>
+document.getElementById('toolbar').addEventListener('click', function() {
+    const toolbar = this;
+    const pageContent = document.querySelector('.page-content');
+    const accordionContent = document.querySelector('.accordion-content');
+    const isExpanded = toolbar.classList.contains('accordion-expanded');
+
+    if (isExpanded) {
+        accordionContent.style.maxHeight = '0px'; // Set max-height to 0 for collapse animation
+        setTimeout(() => {
+            toolbar.classList.remove('accordion-expanded');
+            toolbar.style.position = 'fixed'; // Change toolbar position to fixed after animation
+            pageContent.classList.remove('expanded'); // Remove expanded class from page content
+        }, 300); // Adjust timing to match accordion closing animation
+    } else {
+        if (window.scrollY > 0) {
+            // Custom smooth scroll to the top with ease-out effect
+            smoothScrollToTop();
+
+            // Wait for the scroll to finish before expanding the accordion
+            setTimeout(function() {
+                toolbar.classList.add('accordion-expanded');
+                toolbar.style.position = 'static'; // Change toolbar position to static before expanding
+                accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px'; // Set max-height to content height
+                pageContent.classList.add('expanded'); // Add expanded class to page content
+            }, 800);
+        } else {
+            toolbar.classList.add('accordion-expanded');
+            toolbar.style.position = 'static'; // Change toolbar position to static before expanding
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px'; // Set max-height to content height
+            pageContent.classList.add('expanded'); // Add expanded class to page content
+        }
+    }
+});
+
+
+    // Update max-height on window resize
+    window.addEventListener('resize', function() {
+        const accordionContent = document.querySelector('.accordion-content');
+        if (document.querySelector('.toolbar').classList.contains('accordion-expanded')) {
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+        }
+    });
+
+    function smoothScrollToTop() {
+        const scrollDuration = 500;
+        let elapsedTime = 0;
+        const interval = 15;
+        const startScrollY = window.scrollY;
+
+        const scrollInterval = setInterval(function() {
+            elapsedTime += interval;
+            const progress = elapsedTime / scrollDuration;
+            const easeOutProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
+            const currentScrollY = startScrollY * (1 - easeOutProgress);
+
+            window.scrollTo(0, currentScrollY);
+
+            if (progress >= 1) {
+                clearInterval(scrollInterval);
+            }
+        }, interval);
+    }
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
